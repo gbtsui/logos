@@ -1,0 +1,29 @@
+# no idea what i'm doing wooo
+FROM gradle:latest AS builder
+WORKDIR /app
+COPY --chown=gradle:gradle . .
+#RUN gradle clean build --no-daemon
+
+USER gradle
+RUN ./gradlew build --stacktrace
+
+
+#RUN "./gradlew"
+#RUN ["./gradlew", "run"]
+
+FROM openjdk:latest
+WORKDIR /app
+#RUN echo $(ls) 
+COPY --from=builder /app/app/build/libs/*.jar app.jar
+EXPOSE 8080
+RUN echo "running weeewooo"
+#ENTRYPOINT gradle run
+ENTRYPOINT ["./gradlew", "run"]
+
+#RUN gradle build
+#RUN gradle build --no-daemon
+
+
+#FROM openjdk:latest
+#COPY --from=builder /build/libs/app.jar app.jar
+#RUN "./gradlew run"

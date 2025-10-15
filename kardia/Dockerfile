@@ -1,14 +1,11 @@
-# no idea what i'm doing wooo
-FROM gradle:latest AS builder
+FROM gradle:latest AS builder 
 WORKDIR /app
 COPY --chown=gradle:gradle . .
-RUN "./gradlew"
-#RUN gradle build
-#RUN gradle build --no-daemon
+RUN ./gradlew build --no-daemon
 
 
-FROM openjdk:latest
+FROM eclipse-temurin:latest
 WORKDIR /app
-COPY --from=builder /app/build/libs/app.jar app.jar
+COPY --from=builder /app/app/build/libs/app.jar app.jar
 EXPOSE 8080
-CMD ["./gradlew", "run"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
