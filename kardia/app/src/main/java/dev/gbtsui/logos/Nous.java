@@ -1,4 +1,4 @@
-package org;
+package dev.gbtsui.logos;
 
 public class Nous {
     public static void main(String[] args) {
