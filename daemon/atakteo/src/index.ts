@@ -1,5 +1,12 @@
 import {
-    App
+    App,
+    LogLevel,
+} from "@slack/bolt";
+import type {
+    KnownEventFromType,
+    SayFn,
+    AllMiddlewareArgs,
+    SlackEventMiddlewareArgs
 } from "@slack/bolt";
 import "dotenv/config"
 
@@ -11,20 +18,24 @@ const app = new App({
     token: SLACK_BOT_TOKEN,
     signingSecret: SIGNING_SECRET,
     socketMode: true,
-    appToken: SLACK_APP_TOKEN
+    appToken: SLACK_APP_TOKEN,
+    logLevel: LogLevel.DEBUG
 });
 
-app.message("logos say something", async ({
-    message,
+app.message("hi logos", async ({
+    context,
     say,
-}) => {
+    logger
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<'message'>) => {
     try {
-        app.logger.debug(message)
-        await say("wagwan "+message.channel)
+        logger.debug(context)
+        await say(`hi <@${context.userId}>`)
     } catch(err) {
         console.error(err)
     }
 });
+
+
 
 /*
 app.message("logos say something", async ({
