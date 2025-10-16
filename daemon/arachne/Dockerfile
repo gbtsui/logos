@@ -1,7 +1,7 @@
 FROM node 
-WORKDIR /src
-COPY package.json /src
+WORKDIR /app 
+COPY package.json /app
 RUN npm i 
-COPY . /src
+COPY . /app/
 RUN ["npm", "run", "build"]
 ENTRYPOINT ["npm", "run", "start"]

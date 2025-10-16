@@ -3,3 +3,11 @@ services:
     build: ./kardia
     ports: 
       - 8080:8080
+  atakteo:
+    build: ./daemon/atakteo
+    ports:
+      - 6767:6767
+  arachne:
+    build: ./daemon/arachne
+    ports:
+      - 3000:3000
